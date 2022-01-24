@@ -1,0 +1,49 @@
+<div>
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+    <div class="progress-bar-container" *ngIf="isProgress">
+      <div class="progress">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          [style.width.%]="progress"
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          {{ progress }}%
+        </div>
+      </div>
+      <hr />
+      <p style="text-align: center">
+        {{ progress === 100 ? "Completed" : "Seeding db ..." }}
+      </p>
+    </div>
+
+    <div class="uploader" *ngIf="!isProgress">
+      <file-upload
+        [(ngModel)]="uploadedFiles"
+        name="files"
+        ngModel
+        fileslimit="1"
+        multiple="false"
+        ngModel
+        required
+        accept=".csv"
+        #fileUploader
+      ></file-upload>
+
+      <input
+        *ngIf="!spinner"
+        class="upload"
+        type="submit"
+        value="Submit"
+        [disabled]="!form.valid"
+      />
+      <div class="spinner">
+        <div *ngIf="spinner" class="spinner-grow text-info" role="status">
+          <span class="sr-only spinner">&nbsp; Uploading...</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
